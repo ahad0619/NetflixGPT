@@ -39,12 +39,15 @@ const Login = () => {
                     // Signed in 
                     const user = userCredential.user;
                     // ...
-                    console.log(user)
+                    console.log("user logged in successfully ",user)
+
                 })  
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
+                    console.error("Login failed:", errorCode, errorMessage)
                     setErrorMessage(errorCode + ":" + errorMessage)
+                    
                 });
         }
     }
