@@ -1,13 +1,16 @@
 import { useState, useRef } from "react"
 import { isDataValid } from "../utils/isDataValid"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebaseSetup.js";
-import myLogo from '../assets/my_logo.png'
+import Header from './Header.jsx'
 import cover from '../assets/my_cover.jpg'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [signInForm, setSignInForm] = useState(true)
     const [errorMessage, setErrorMessage] = useState()
+    const navigate = useNavigate()
+
     const toggleSignUpForm = () => {
         setSignInForm(!signInForm)
     }
@@ -22,7 +25,6 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed up 
                     const user = userCredential.user;
-                    // ...
                     console.log(user)
                 })
                 .catch((error) => {
@@ -31,23 +33,21 @@ const Login = () => {
                     // ..
                     setErrorMessage(errorCode + ":" + errorMessage)
                 });
-
         }
         else {        // sign in logic
-            signInWithEmailAndPassword(auth,email.current.value, password.current.value)
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     // Signed in 
-                    const user = userCredential.user;
-                    // ...
-                    console.log("user logged in successfully ",user)
+                    const user= userCredential
+                    console.log("user logged in successfully ", user)
 
-                })  
+                })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.error("Login failed:", errorCode, errorMessage)
                     setErrorMessage(errorCode + ":" + errorMessage)
-                    
+
                 });
         }
     }
@@ -55,12 +55,7 @@ const Login = () => {
     const email = useRef(null)
     const password = useRef(null)
     return (<>
-        <div className='header relative mx-30'>
-            <img
-                className="z-10" src={myLogo}
-                style={{ width: "180px", margin: "5px", position: "absolute" }}
-                alt="Netflix logo" />
-        </div>
+        <Header />
         <div className='relative'>
             <img
                 className='w-full'

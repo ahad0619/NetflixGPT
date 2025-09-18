@@ -1,9 +1,10 @@
-import React from 'react'
+import Header from './Header.jsx'
 
 const Browse = () => {
   return (<>
-    <h1>hii</h1>
-    <div className="w-full h-64 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
+   
+      <Header />
+  
   </>)
 }
 
