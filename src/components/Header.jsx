@@ -46,7 +46,7 @@ const Header = () => {
   }
 
   return (
-    <div className="absolute top-0 left-0 w-full flex justify-between items-center px-20 py-4 z-10">
+    <div className="absolute top-0 left-0 w-full flex justify-between items-center px-20 pt-4 z-10">
 
       <img
         src={myLogo}
