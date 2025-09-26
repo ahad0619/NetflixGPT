@@ -9,7 +9,7 @@ const MainContainer = () => {
     const mainMovie = movies[0]
     
     return (
-        <div className='pt-40 '>
+        <div className=' '>
             <VideoTitle title={mainMovie.original_title} overview={mainMovie.overview} />
             <VideoBackground id={mainMovie.id} />
         </div>

@@ -6,7 +6,7 @@ const VideoBackground = ({ id }) => {
     // console.log(trailerKey)
 
     return (
-        <div className="mb-5">
+        <div className="mb-5 ">
             <iframe
             className="aspect-video w-screen"
                 // width="300"
