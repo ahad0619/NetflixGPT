@@ -19,8 +19,8 @@ const GptSearch = () => {
     // console.log(search.current.value)
     const client = new OpenAI({
       apiKey: import.meta.env.VITE_OPEN_AI,
-      dangerouslyAllowBrowser : true
-    
+      dangerouslyAllowBrowser: true
+
     })
     const response = await client.responses.create({
       model: "gpt-3.5-turbo",
@@ -40,25 +40,37 @@ const GptSearch = () => {
   }
   return (
     <>
-      <img
-        src={myCover}
-        alt="cover page"
-        className='absolute' />
-      <div className='mt-40 mx-70 w-full h-20 absolute'>
-        <input className='border-1 bg-black text-white w-180 h-10 mx-2 p-2 rounded-lg'
-          type="text"
-          placeholder={lang[languageKey].gptSearchPlaceholder}
-          ref={search}
+      {/* Cover Image */}
+      <div className="relative w-full h-screen">
+        <img
+          src={myCover}
+          alt="cover page"
+          className="w-full h-full object-cover"
         />
-        <button type="button"
-          class="btn btn-danger" onClick={captureSearch}>{lang[languageKey].search}
-        </button>
 
+        {/* Search Bar */}
+        <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex flex-col sm:flex-row justify-center items-center px-4 gap-2">
+          <input
+            className="border border-gray-300 bg-black text-white w-full sm:w-1/3 h-12 p-2 rounded-lg"
+            type="text"
+            placeholder={lang[languageKey].gptSearchPlaceholder}
+            ref={search}
+          />
+          <button
+            type="button"
+            className="bg-red-600 text-white font-semibold py-2 px-6 h-12 rounded hover:bg-red-700 w-full sm:w-auto"
+            onClick={captureSearch}
+          >
+            {lang[languageKey].search}
+          </button>
+        </div>
       </div>
-     <div><GptMovieDisplay/></div>
+
+      {/* Display Section */}
+      <div className="mt-8 px-4">
+        <GptMovieDisplay />
+      </div>
     </>
-  )
+  );
 }
-
-
 export default GptSearch

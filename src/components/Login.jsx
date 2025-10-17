@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { isDataValid } from "../utils/isDataValid"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseSetup.js";
 import Header from './Header.jsx'
 import cover from '../assets/my_cover.jpg'
@@ -11,98 +11,91 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState()
     const navigate = useNavigate()
 
-    const toggleSignUpForm = () => {
-        setSignInForm(!signInForm)
-    }
-    const validateData = () => {
-        const message = (isDataValid(email.current.value, password.current.value))
-        setErrorMessage(message)
-        if (message) return
-        if (!signInForm) // sign up logic
-        {
-
-            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    console.log(user)
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // ..
-                    setErrorMessage(errorCode + ":" + errorMessage)
-                });
-        }
-        else {        // sign in logic
-            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user= userCredential
-                    console.log("user logged in successfully ", user)
-
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Login failed:", errorCode, errorMessage)
-                    setErrorMessage(errorCode + ":" + errorMessage)
-
-                });
-        }
-    }
+    const toggleSignUpForm = () => setSignInForm(!signInForm)
 
     const email = useRef(null)
     const password = useRef(null)
-    return (<>
-        <Header />
-        <div className='relative'>
-            <img
-                className='w-full'
-                src={cover}
-                alt="Background image" />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-00 opacity-60"> </div>
 
-            <div className='signInBox absolute top-1/2 left-1/2
-                  bg-black p-6 w-96 h-120 z-20  transform -translate-x-1/2 -translate-y-1/2 '>
-                <h1
-                    className='text-white text-4xl font-bold p-6'>
-                    {signInForm ? "Sign In" : "Sign Up"}
-                </h1>
-                {!signInForm && < input
-                    className='border-gray-400 text-white p-2 border-1 mb-4 mx-6 py-2 w-72'
-                    type="text"
-                    placeholder='Name' />}
-                <input
-                    className='border-gray-400 text-white p-2 border-1 mb-4 mx-6 py-2 w-72'
-                    type="text"
-                    placeholder='Email or mobile number'
-                    ref={email} />
-                <input className='border-gray-400 text-white p-2 border-1 mb-4 mx-6 py-2 w-72'
-                    type="password"
-                    placeholder='Password'
-                    ref={password} />
-                <button
-                    className='bg-red-600 p-2 w-72 mx-6 mb-4 text-white cursor-pointer font-semibold'
-                    onClick={validateData}>
-                    {signInForm ? "Sign In" : "Sign Up"}
+    const validateData = () => {
+        const message = isDataValid(email.current.value, password.current.value)
+        setErrorMessage(message)
+        if (message) return
 
-                </button>
-                <p className="text-red-600 mx-6 pb-2">{errorMessage}</p>
-                <span
-                    className='text-white m-1 ml-6 '>
-                    {signInForm ? "New User?" : "Already a user?"}
-                </span>
-                <span
-                    className='text-white cursor-pointer font-semibold '
-                    onClick={toggleSignUpForm}>
-                    {signInForm ? "Sign Up" : "Sign In"}
-                </span>
+        if (!signInForm) {
+            // Sign Up
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    console.log("User signed up:", userCredential.user)
+                })
+                .catch((error) => {
+                    setErrorMessage(error.code + ":" + error.message)
+                });
+        } else {
+            // Sign In
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    console.log("User logged in:", userCredential.user)
+                })
+                .catch((error) => {
+                    setErrorMessage(error.code + ":" + error.message)
+                });
+        }
+    }
 
+    return (
+        <>
+            <Header />
+            <div className='relative min-h-screen'>
+                <img
+                    className='w-full h-full object-cover'
+                    src={cover}
+                    alt="Background image" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-transparent to-gray-900 opacity-60"></div>
+
+                <div className='absolute top-1/2 left-1/2 bg-black p-6 z-20 transform -translate-x-1/2 -translate-y-1/2
+                                w-11/12 sm:w-96 rounded-md'>
+                    <h1 className='text-white text-3xl sm:text-4xl font-bold mb-6 text-center'>
+                        {signInForm ? "Sign In" : "Sign Up"}
+                    </h1>
+
+                    {!signInForm && (
+                        <input
+                            className='w-full text-white p-2 mb-4 border border-gray-400 rounded'
+                            type="text"
+                            placeholder='Name'
+                        />
+                    )}
+
+                    <input
+                        className='w-full text-white p-2 mb-4 border border-gray-400 rounded'
+                        type="text"
+                        placeholder='Email or mobile number'
+                        ref={email} 
+                    />
+                    <input
+                        className='w-full text-white p-2 mb-4 border border-gray-400 rounded'
+                        type="password"
+                        placeholder='Password'
+                        ref={password} 
+                    />
+                    <button
+                        className='w-full bg-red-600 text-white font-semibold py-2 mb-4 rounded hover:bg-red-700 transition-colors'
+                        onClick={validateData}
+                    >
+                        {signInForm ? "Sign In" : "Sign Up"}
+                    </button>
+                    {errorMessage && <p className="text-red-600 mb-4 text-center">{errorMessage}</p>}
+
+                    <div className='text-center text-white'>
+                        <span>{signInForm ? "New User? " : "Already a user? "}</span>
+                        <span className='cursor-pointer font-semibold underline' onClick={toggleSignUpForm}>
+                            {signInForm ? "Sign Up" : "Sign In"}
+                        </span>
+                    </div>
+                </div>
             </div>
-        </div>
-
-    </>
+        </>
     )
 }
 

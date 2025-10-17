@@ -11,7 +11,7 @@ const GptMovieDisplay = () => {
         <>
            { (movieArray.length > 0) &&
             <div className='p-2 bg-white/50 w-[95vw] h-50 absolute z-30 mt-72 ml-5 '>
-                <Card movies={movieArray} title={"Search Result"} />
+                <Card movies={movieArray} title={"Search Result"} className="!text-black"/>
             </div>}
         </>
 

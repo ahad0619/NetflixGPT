@@ -3,7 +3,7 @@ import { IMG_URL } from "../utils/constants";
 
 
 
-export const Card = ({ movies, title , className }) => {
+export const Card = ({ movies, title, className }) => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -20,29 +20,28 @@ export const Card = ({ movies, title , className }) => {
 
   return (
     <>
-    <div className={className}>
-     <div>
-        <h1 className={className || "font-bold text-2xl text-white"}>{title}</h1>
-      </div>
-      </div>
-    <div
-      ref={scrollRef}
-      className="overflow-x-scroll gap-3 p-3 hide-scrollbar"
-      style={{ scrollBehavior: "smooth" }}>
 
-     
-   <div className="flex gap-4 ">
-      {movies?.map((movie, index) => (
-        <img
-          key={index}
-          src={IMG_URL + movie.poster_path}
-          alt="movie poster"
-          className="h-64 rounded shadow"
-        />
-        
-      ))}
+      <div>
+        <h1 className={`font-bold text-2xl text-white ${className || ""} `}>{title}</h1>
       </div>
-    </div>
+      <div
+        ref={scrollRef}
+        className="overflow-x-scroll gap-3 p-3 hide-scrollbar"
+        style={{ scrollBehavior: "smooth" }}>
+
+
+        <div className="flex gap-4 ">
+          {movies?.map((movie, index) => (
+            <img
+              key={index}
+              src={IMG_URL + movie.poster_path}
+              alt="movie poster"
+              className="h-64 rounded shadow"
+            />
+
+          ))}
+        </div>
+      </div>
     </>
   );
 }
