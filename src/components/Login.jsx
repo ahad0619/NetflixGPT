@@ -45,11 +45,11 @@ const Login = () => {
     return (
         <>
             <Header />
-            <div className='relative min-h-screen'>
+            <div className='relative w-full min-h-screen'>
                 <img
-                    className='w-full h-full object-cover'
                     src={cover}
-                    alt="Background image" 
+                    alt="Background image"
+                    className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-transparent to-gray-900 opacity-60"></div>
 
@@ -71,13 +71,13 @@ const Login = () => {
                         className='w-full text-white p-2 mb-4 border border-gray-400 rounded'
                         type="text"
                         placeholder='Email or mobile number'
-                        ref={email} 
+                        ref={email}
                     />
                     <input
                         className='w-full text-white p-2 mb-4 border border-gray-400 rounded'
                         type="password"
                         placeholder='Password'
-                        ref={password} 
+                        ref={password}
                     />
                     <button
                         className='w-full bg-red-600 text-white font-semibold py-2 mb-4 rounded hover:bg-red-700 transition-colors'

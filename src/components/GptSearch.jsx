@@ -33,44 +33,40 @@ const GptSearch = () => {
     const moviesArray = JSON.parse(raw);
     const result = moviesArray.map((movie) => { return tmbdSearchApi(movie) })
     const finalResult = await Promise.all(result)
-    // console.log(finalResult)
-    // console.log(finalResult[0].results[0].title)
+
     dispatch(addGptMovies(finalResult))
 
   }
   return (
     <>
-      {/* Cover Image */}
-      <div className="relative w-full h-screen">
-        <img
-          src={myCover}
-          alt="cover page"
-          className="w-full h-full object-cover"
+      <img
+        src={myCover}
+        alt="cover page"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row justify-center items-center gap-3 w-11/12 sm:w-2/3 md:w-1/2">
+        <input
+          className="border border-gray-300 bg-black/70 text-white w-full h-12 p-3 rounded-lg placeholder-gray-300"
+          type="text"
+          placeholder={lang[languageKey].gptSearchPlaceholder}
+          ref={search}
         />
-
-        {/* Search Bar */}
-        <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex flex-col sm:flex-row justify-center items-center px-4 gap-2">
-          <input
-            className="border border-gray-300 bg-black text-white w-full sm:w-1/3 h-12 p-2 rounded-lg"
-            type="text"
-            placeholder={lang[languageKey].gptSearchPlaceholder}
-            ref={search}
-          />
-          <button
-            type="button"
-            className="bg-red-600 text-white font-semibold py-2 px-6 h-12 rounded hover:bg-red-700 w-full sm:w-auto"
-            onClick={captureSearch}
-          >
-            {lang[languageKey].search}
-          </button>
-        </div>
+        <button
+          type="button"
+          className="bg-red-600 text-white font-semibold py-2 px-6 rounded hover:bg-red-700 w-full sm:w-auto"
+          onClick={captureSearch}
+        >
+          {lang[languageKey].search}
+        </button>
       </div>
 
-      {/* Display Section */}
-      <div className="mt-8 px-4">
-        <GptMovieDisplay />
-      </div>
+
+      <div><GptMovieDisplay /></div>
+
     </>
-  );
+  )
 }
+
+
 export default GptSearch

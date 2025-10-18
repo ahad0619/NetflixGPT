@@ -6,7 +6,7 @@ const GptMovieDisplay = () => {
    
         const movieArray = (movieInfoFromStore.flatMap(movie => movie.results) || []) 
 
-    console.log(movieArray)
+    // console.log(movieArray)
     return (
         <>
            { (movieArray.length > 0) &&
